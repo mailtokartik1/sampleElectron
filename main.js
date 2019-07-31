@@ -1,5 +1,6 @@
 // Modules to control application life and create native browser window
 const {app, BrowserWindow} = require('electron')
+const path = require('path');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -17,7 +18,7 @@ function createWindow () {
   })
 
   // and load the index.html of the app.
-  mainWindow.loadFile('/Users/kartik_singh/Desktop/sampleElectron/pdfjs/web/viewer.html')
+  mainWindow.loadFile(path.resolve(__dirname, "pdfjs/web/viewer.html"))
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
