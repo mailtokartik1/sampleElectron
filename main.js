@@ -1,5 +1,5 @@
 // Modules to control application life and create native browser window
-const {app, BrowserWindow} = require('electron')
+const {app, BrowserWindow, session} = require('electron')
 const path = require('path');
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -8,6 +8,7 @@ let mainWindow
 
 function createWindow () {
   // Create the browser window.
+  session.defaultSession.on('will-download', onDownload);
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
@@ -17,8 +18,18 @@ function createWindow () {
     }
   })
 
+  function onDownload(event, item, webContents) {
+    console.log('onDownload');
+    // Prevent from downloading pdf file.
+    if (item.getMimeType() == 'application/pdf' && item.getURL().indexOf('blob:file:') != 0) {
+      event.preventDefault();
+      let encodedUrl = encodeURIComponent(item.getURL());
+      BrowserWindow.getFocusedWindow().loadFile(path.resolve(__dirname, "pdfjs/web/viewer.html"));
+      //mainWindow.loadUrl(path.resolve(__dirname, "pdfjs/web/viewer.html"));
+    }
+  }
   // and load the index.html of the app.
-  mainWindow.loadFile(path.resolve(__dirname, "pdfjs/web/viewer.html"))
+  mainWindow.loadFile('index.html')
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
