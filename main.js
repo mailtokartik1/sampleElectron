@@ -17,7 +17,7 @@ function createWindow () {
   })
 
   // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
+  mainWindow.loadFile('/Users/kartik_singh/Desktop/sampleElectron/pdfjs/web/viewer.html')
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
